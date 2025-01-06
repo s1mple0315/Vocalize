@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:vocalize/ui/pages/main_page.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const VocalizeApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class VocalizeApp extends StatelessWidget {
+  const VocalizeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      title: 'Vocalize',
+      theme: ThemeData(
+        primarySwatch: Colors.grey,
       ),
+      home: const MainPage(),
     );
   }
 }
