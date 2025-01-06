@@ -19,8 +19,14 @@ class AudioRecorder {
       throw Exception('Microphone permission denied');
     }
 
-    final Directory directory = await getApplicationDocumentsDirectory();
-    final String path = '${directory.path}/recording_${DateTime.now().millisecondsSinceEpoch}.aac';
+    final Directory directory = await _getTargetDirectory();
+
+    if (!await directory.exists()) {
+      await directory.create(recursive: true);
+    }
+
+    final String path =
+        '${directory.path}/recording_${DateTime.now().millisecondsSinceEpoch}.aac';
 
     await _recorder.startRecorder(toFile: path);
     print('Recording started: $path');
@@ -34,5 +40,15 @@ class AudioRecorder {
 
   Future<void> dispose() async {
     await _recorder.closeRecorder();
+  }
+
+  Future<Directory> _getTargetDirectory() async {
+    if (Platform.isAndroid) {
+      return Directory('/storage/emulated/0/Download');
+    } else if (Platform.isIOS) {
+      return await getApplicationDocumentsDirectory();
+    } else {
+      throw UnsupportedError('Unsupported platform');
+    }
   }
 }
