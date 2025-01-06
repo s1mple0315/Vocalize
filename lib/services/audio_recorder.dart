@@ -19,6 +19,10 @@ class AudioRecorder {
       throw Exception('Microphone permission denied');
     }
 
+    if (Platform.isAndroid && !await Permission.storage.request().isGranted) {
+      throw Exception('Storage permission denied');
+    }
+
     final Directory directory = await _getTargetDirectory();
 
     if (!await directory.exists()) {
@@ -44,11 +48,30 @@ class AudioRecorder {
 
   Future<Directory> _getTargetDirectory() async {
     if (Platform.isAndroid) {
-      return Directory('/storage/emulated/0/Download');
+      final Directory downloadsDir = Directory('/storage/emulated/0/Download');
+      return Directory('${downloadsDir.path}/Vocalize');
     } else if (Platform.isIOS) {
-      return await getApplicationDocumentsDirectory();
+      final Directory documentsDir = await getApplicationDocumentsDirectory();
+      return Directory('${documentsDir.path}/Vocalize');
     } else {
       throw UnsupportedError('Unsupported platform');
     }
+  }
+
+  Future<List<File>> listRecordings() async {
+    final Directory directory = await _getTargetDirectory();
+
+    if (!await directory.exists()) {
+      return [];
+    }
+
+    final List<FileSystemEntity> entities = directory.listSync();
+
+    final List<File> audioFiles = entities
+        .where((entity) => entity is File && entity.path.endsWith('.aac'))
+        .cast<File>()
+        .toList();
+
+    return audioFiles;
   }
 }
