@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> {
       child: Text('Dictaphone functionality will be here',
         style: TextStyle(fontSize: 18),),
     ),
-    const RecordingsPage()
+    RecordingsPage()
   ];
 
   void onTabSelected(int index) {
