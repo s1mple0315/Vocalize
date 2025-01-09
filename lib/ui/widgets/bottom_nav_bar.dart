@@ -13,10 +13,20 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.grey,
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.grey[900],
       currentIndex: currentIndex,
       onTap: onTabSelected,
+      
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.mic), label: 'Record'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.mic),
+            backgroundColor: Colors.white,
+            label: 'Record'),
         BottomNavigationBarItem(
             icon: Icon(Icons.library_music), label: 'Recordings'),
       ],

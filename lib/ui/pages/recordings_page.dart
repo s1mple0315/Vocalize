@@ -28,11 +28,20 @@ class _RecordingsPageState extends State<RecordingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Recordings'),
+        backgroundColor: Colors.black,
+        title: const Text(
+          'Recordings',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: _recordings.isEmpty
-          ? const Center(child: Text('No recordings found'))
+          ? const Center(
+              child: Text(
+              'No recordings found',
+              style: TextStyle(color: Colors.white),
+            ))
           : ListView.builder(
               itemCount: _recordings.length,
               itemBuilder: (context, index) {
