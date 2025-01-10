@@ -42,18 +42,26 @@ class _RecordingsPageState extends State<RecordingsPage> {
               'No recordings found',
               style: TextStyle(color: Colors.white),
             ))
-          : ListView.builder(
+          : ListView.separated(
               itemCount: _recordings.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 4),
               itemBuilder: (context, index) {
                 final File recording = _recordings[index];
-                return ListTile(
-                  title: Text(
-                    recording.path.split('/').last,
+                return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey[900],
                   ),
-                  subtitle: Text(recording.path),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.play_arrow),
-                    onPressed: () {},
+                  child: ListTile(
+                    title: Text(
+                      recording.path.split('/').last,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.play_arrow),
+                      onPressed: () {},
+                    ),
                   ),
                 );
               },

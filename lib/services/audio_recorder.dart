@@ -30,7 +30,7 @@ class AudioRecorder {
     }
 
     final String path =
-        '${directory.path}/recording_${DateTime.now().millisecondsSinceEpoch}.aac';
+        '${directory.path}/Recording_${DateTime.now().millisecondsSinceEpoch}.aac';
 
     await _recorder.startRecorder(toFile: path);
     print('Recording started: $path');
