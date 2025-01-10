@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:vocalize/services/edit_recordings.dart';
+import 'package:vocalize/ui/widgets/audio_player.dart';
 
 class RecordingsPage extends StatefulWidget {
   const RecordingsPage({Key? key}) : super(key: key);
@@ -38,6 +39,16 @@ class _RecordingsPageState extends State<RecordingsPage> {
     }
   }
 
+  void _playRecording(File recording) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return AudioPlayerWidget(filePath: recording.path);
+      },
+    );
+  }
+
   Future<void> _renameRecording(File file) async {
     final TextEditingController controller = TextEditingController();
 
@@ -45,7 +56,10 @@ class _RecordingsPageState extends State<RecordingsPage> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: Colors.grey[900],
-        title: const Text('Rename Recording', style: TextStyle(color: Colors.white),),
+        title: const Text(
+          'Rename Recording',
+          style: TextStyle(color: Colors.white),
+        ),
         content: TextField(
           style: TextStyle(color: Colors.white),
           controller: controller,
@@ -56,7 +70,8 @@ class _RecordingsPageState extends State<RecordingsPage> {
             onPressed: () async {
               try {
                 if (controller.text.trim().isNotEmpty) {
-                  await _recordingsService.renameRecording(file, controller.text.trim());
+                  await _recordingsService.renameRecording(
+                      file, controller.text.trim());
                   _fetchRecordings(); // Refresh the list
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -103,24 +118,42 @@ class _RecordingsPageState extends State<RecordingsPage> {
         shrinkWrap: true,
         children: [
           ListTile(
-            leading: const Icon(Icons.play_arrow, color: Colors.white,),
-            title: const Text('Play', style: TextStyle(color: Colors.white),),
+            leading: const Icon(
+              Icons.play_arrow,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Play',
+              style: TextStyle(color: Colors.white),
+            ),
             onTap: () {
-              // Play logic here
               Navigator.pop(context);
+              _playRecording(recording);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.edit, color: Colors.white,),
-            title: const Text('Rename', style: TextStyle(color: Colors.white),),
+            leading: const Icon(
+              Icons.edit,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Rename',
+              style: TextStyle(color: Colors.white),
+            ),
             onTap: () {
               Navigator.pop(context);
               _renameRecording(recording);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.delete, color: Colors.white,),
-            title: const Text('Delete', style: TextStyle(color: Colors.white),),
+            leading: const Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Delete',
+              style: TextStyle(color: Colors.white),
+            ),
             onTap: () {
               Navigator.pop(context);
               _deleteRecording(recording);
