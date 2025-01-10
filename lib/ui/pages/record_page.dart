@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:vocalize/services/audio_recorder.dart';
 
@@ -51,6 +53,13 @@ class _RecordPageState extends State<RecordPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Recording saved: $path')),
         );
+
+        // Hide the text after 3 seconds
+        Timer(const Duration(seconds: 3), () {
+          setState(() {
+            _currentRecordingPath = null;
+          });
+        });
       }
     } catch (e) {
       debugPrint('Error stopping recording: $e');
@@ -80,19 +89,32 @@ class _RecordPageState extends State<RecordPage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text('Record Audio', style: TextStyle(color: Colors.white)),
+        title:
+            const Text('Record Audio', style: TextStyle(color: Colors.white)),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              iconSize: 100,
-              icon: Icon(
-                _isRecording ? Icons.mic_off : Icons.mic,
-                color: _isRecording ? Colors.red : Colors.blue,
+            AvatarGlow(
+              glowColor: _isRecording ? Colors.red : Colors.white,
+              duration: const Duration(milliseconds: 2000),
+              repeat: true,
+              animate: _isRecording,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey[900],
+                ),
+                child: IconButton(
+                  iconSize: 100,
+                  icon: Icon(
+                    _isRecording ? Icons.mic_off : Icons.mic,
+                    color: _isRecording ? Colors.red : Colors.white,
+                  ),
+                  onPressed: _isRecording ? _stopRecording : _startRecording,
+                ),
               ),
-              onPressed: _isRecording ? _stopRecording : _startRecording,
             ),
             if (_currentRecordingPath != null)
               Padding(
