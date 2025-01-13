@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vocalize/ui/pages/record_page.dart';
 import 'package:vocalize/ui/pages/recordings_page.dart';
+import 'package:vocalize/ui/pages/transcriptions_page.dart';
 import 'package:vocalize/ui/widgets/bottom_nav_bar.dart';
 
 class MainPage extends StatefulWidget {
@@ -34,7 +35,8 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     RecordPage(),
-    RecordingsPage()
+    RecordingsPage(),
+    TranscriptionsPage()
   ];
 
   void onTabSelected(int index) {

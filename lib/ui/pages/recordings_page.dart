@@ -159,6 +159,20 @@ class _RecordingsPageState extends State<RecordingsPage> {
               _deleteRecording(recording);
             },
           ),
+          ListTile(
+            leading: const Icon(
+              Icons.graphic_eq,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Transcribe',
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              //Transcribe the recording
+            },
+          ),
         ],
       ),
     );

@@ -21,7 +21,6 @@ class BottomNavBar extends StatelessWidget {
       backgroundColor: Colors.grey[900],
       currentIndex: currentIndex,
       onTap: onTabSelected,
-      
       items: [
         BottomNavigationBarItem(
             icon: Icon(Icons.mic),
@@ -29,6 +28,8 @@ class BottomNavBar extends StatelessWidget {
             label: 'Record'),
         BottomNavigationBarItem(
             icon: Icon(Icons.library_music), label: 'Recordings'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.graphic_eq), label: 'Transcriptions'),
       ],
     );
   }
