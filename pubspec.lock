@@ -30,14 +30,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.0"
-  asn1lib:
-    dependency: transitive
-    description:
-      name: asn1lib
-      sha256: "4bae5ae63e6d6dd17c4aac8086f3dec26c0236f6a0f03416c6c19d830c367cf5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.8"
   async:
     dependency: transitive
     description:
@@ -254,14 +246,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
-  encrypt:
-    dependency: transitive
-    description:
-      name: encrypt
-      sha256: "62d9aa4670cc2a8798bab89b39fc71b6dfbacf615de6cf5001fb39f7e4a996a2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -278,14 +262,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.3"
-  ffmpeg_dart:
-    dependency: transitive
-    description:
-      name: ffmpeg_dart
-      sha256: b5393b125738c25b97542316dc116d271c667984f3ab62de947fde5cfbebb324
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.0"
   file:
     dependency: transitive
     description:
@@ -357,14 +333,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
-  galaxeus_lib:
-    dependency: transitive
-    description:
-      name: galaxeus_lib
-      sha256: "1a14a2143b21791c2d4d0fc2c89be0e31125ba9095ae49468f39d3b926c5c031"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.94"
   glob:
     dependency: transitive
     description:
@@ -661,14 +629,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  pointycastle:
-    dependency: transitive
-    description:
-      name: pointycastle
-      sha256: "4be0097fcf3fd3e8449e53730c631200ebc7b88016acecab2b0da2f0149222fe"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.9.1"
   pool:
     dependency: transitive
     description:
@@ -834,14 +794,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
-  universal_io:
-    dependency: transitive
-    description:
-      name: universal_io
-      sha256: "1722b2dcc462b4b2f3ee7d188dad008b6eb4c40bbd03a3de451d82c78bba9aad"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.2"
   uuid:
     dependency: transitive
     description:
@@ -898,22 +850,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
-  whisper_dart:
-    dependency: transitive
-    description:
-      name: whisper_dart
-      sha256: "025146bea63b02d92ffaf92537d638d97e5ca13d17b75b4b9c088d46e6528f90"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.11"
-  whisper_flutter:
-    dependency: "direct main"
-    description:
-      name: whisper_flutter
-      sha256: "62a90d7599a322b1915aa57893beebbbc3a41d5de6161dfa7d93a580508e784c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.5"
   xdg_directories:
     dependency: transitive
     description:
