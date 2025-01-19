@@ -54,7 +54,6 @@ class _RecordPageState extends State<RecordPage> {
           SnackBar(content: Text('Recording saved: $path')),
         );
 
-        // Hide the text after 3 seconds
         Timer(const Duration(seconds: 3), () {
           setState(() {
             _currentRecordingPath = null;

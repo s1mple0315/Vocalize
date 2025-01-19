@@ -24,7 +24,7 @@ class EditRecordingsService {
     final List<FileSystemEntity> entities = directory.listSync();
 
     return entities
-        .where((entity) => entity is File && entity.path.endsWith('.aac'))
+        .where((entity) => entity is File && entity.path.endsWith('.wav'))
         .cast<File>()
         .toList();
   }
@@ -43,7 +43,7 @@ class EditRecordingsService {
     }
 
     final Directory directory = file.parent;
-    final String newPath = '${directory.path}/$newName.aac';
+    final String newPath = '${directory.path}/$newName.wav';
 
     if (await File(newPath).exists()) {
       throw Exception('A file with the name $newName already exists');

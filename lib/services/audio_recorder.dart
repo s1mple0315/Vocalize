@@ -30,7 +30,7 @@ class AudioRecorder {
     }
 
     final String path =
-        '${directory.path}/Recording_${DateTime.now().millisecondsSinceEpoch}.aac';
+        '${directory.path}/Recording_${DateTime.now().millisecondsSinceEpoch}.wav';
 
     await _recorder.startRecorder(toFile: path);
     print('Recording started: $path');
@@ -68,7 +68,7 @@ class AudioRecorder {
     final List<FileSystemEntity> entities = directory.listSync();
 
     final List<File> audioFiles = entities
-        .where((entity) => entity is File && entity.path.endsWith('.aac'))
+        .where((entity) => entity is File && entity.path.endsWith('.wav'))
         .cast<File>()
         .toList();
 
