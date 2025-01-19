@@ -6,8 +6,9 @@ class TranscriptionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Transcriptions'),
+        title: const Text('Transcriptions', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
       ),
       body: ListView.builder(
@@ -17,20 +18,14 @@ class TranscriptionsPage extends StatelessWidget {
           return Card(
             margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
             child: ListTile(
-              title: Text('Transcription #$index'),
-              subtitle: const Text('Transcription preview text...'),
+              title: Text('Transcription #$index', style: const TextStyle(fontSize: 18.0, color: Colors.white)),
+              subtitle: const Text('Transcription preview text...', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.grey)),
               onTap: () {
                 // TODO: Handle interaction for detailed view/editing
               },
             ),
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // TODO: Add new transcription action
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }
