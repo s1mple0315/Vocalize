@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:vocalize/providers/transcription_provider.dart';
 import 'package:vocalize/services/edit_recordings.dart';
 import 'package:vocalize/ui/widgets/audio_player.dart';
+import 'package:provider/provider.dart';
+import 'package:vocalize/services/api_service.dart'; // Import ApiService
 
 class RecordingsPage extends StatefulWidget {
   const RecordingsPage({Key? key}) : super(key: key);
@@ -12,6 +15,7 @@ class RecordingsPage extends StatefulWidget {
 
 class _RecordingsPageState extends State<RecordingsPage> {
   final EditRecordingsService _recordingsService = EditRecordingsService();
+  final ApiService _apiService = ApiService(); // Initialize ApiService here
   List<File> _recordings = [];
 
   @override
@@ -51,7 +55,6 @@ class _RecordingsPageState extends State<RecordingsPage> {
 
   Future<void> _renameRecording(File file) async {
     final TextEditingController controller = TextEditingController();
-
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -95,7 +98,7 @@ class _RecordingsPageState extends State<RecordingsPage> {
 
   void _showErrorDialog(String title, String message) {
     showDialog(
-      context: context,
+      context: this.context,
       builder: (context) => AlertDialog(
         backgroundColor: Colors.black,
         title: Text(title),
@@ -110,10 +113,10 @@ class _RecordingsPageState extends State<RecordingsPage> {
     );
   }
 
-  void _showCommandMenu(BuildContext context, File recording) {
+  void _showCommandMenu(BuildContext parentContext, File recording) {
     showModalBottomSheet(
       backgroundColor: Colors.grey[900],
-      context: context,
+      context: parentContext,
       builder: (context) => ListView(
         shrinkWrap: true,
         children: [
@@ -168,15 +171,93 @@ class _RecordingsPageState extends State<RecordingsPage> {
               'Transcribe',
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {
+            onTap: () async {
               Navigator.pop(context);
-              //Transcribe the recording
+              try {
+                String transcriptionText =
+                    await _apiService.transcribeFile(recording);
+                final TextEditingController controller =
+                    TextEditingController();
+                showDialog(
+                  context: parentContext, // Use the parent context here
+                  builder: (context) => AlertDialog(
+                    backgroundColor: Colors.grey[800],
+                    title: const Text('Name the Transcription',
+                        style: TextStyle(color: Colors.white)),
+                    content: TextField(
+                      style: const TextStyle(color: Colors.white),
+                      controller: controller,
+                      decoration: const InputDecoration(
+                          hintText: 'Enter transcription name',
+                          hintStyle: TextStyle(color: Colors.white)),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          final name = controller.text.trim();
+                          if (name.isNotEmpty) {
+                            final transcriptionProvider =
+                                Provider.of<TranscriptionProvider>(
+                                    parentContext,
+                                    listen: false);
+                            transcriptionProvider.addTranscription(
+                                name, transcriptionText);
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(parentContext).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                'Transcription saved',
+                              )),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(parentContext).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      'Please enter a name for the transcription')),
+                            );
+                          }
+                        },
+                        child: const Text('Save'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Cancel'),
+                      ),
+                    ],
+                  ),
+                );
+              } catch (e) {
+                _showErrorDialog('Error Transcribing Recording', e.toString());
+              }
             },
           ),
         ],
       ),
     );
   }
+
+  // void _showTranscriptionDialog(String transcription) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       backgroundColor: Colors.black,
+  //       title:
+  //           const Text('Transcription', style: TextStyle(color: Colors.white)),
+  //       content: SingleChildScrollView(
+  //         child: Text(
+  //           transcription,
+  //           style: const TextStyle(color: Colors.white),
+  //         ),
+  //       ),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Navigator.pop(context),
+  //           child: const Text('OK'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +315,8 @@ class _RecordingsPageState extends State<RecordingsPage> {
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.more_vert, color: Colors.white),
-                      onPressed: () => _showCommandMenu(context, recording),
+                      onPressed: () => _showCommandMenu(
+                          context, recording), // Pass the parent context
                     ),
                   ),
                 );

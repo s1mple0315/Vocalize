@@ -2,12 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart'; 
-import 'package:path/path.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ApiService {
-  final String baseUrl = "http://127.0.0.1:8000"; 
+  final String baseUrl = "http://172.16.11.29:5000"; // Replace with your server IP and port
 
   Future<String> transcribeFile(File file) async {
     var url = Uri.parse('$baseUrl/transcribe');
