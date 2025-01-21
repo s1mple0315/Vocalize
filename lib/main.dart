@@ -3,11 +3,17 @@ import 'package:vocalize/providers/transcription_provider.dart';
 import 'package:vocalize/ui/pages/main_page.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => TranscriptionProvider())],
-    child: VocalizeApp(),
-  ));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final transcriptionProvider = TranscriptionProvider();
+  await transcriptionProvider.loadTranscriptions();
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => transcriptionProvider,
+      child: const VocalizeApp(),
+    ),
+  );
 }
 
 class VocalizeApp extends StatelessWidget {
