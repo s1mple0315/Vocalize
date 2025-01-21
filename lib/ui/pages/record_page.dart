@@ -70,12 +70,13 @@ class _RecordPageState extends State<RecordPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
+        backgroundColor: Colors.grey[800],
+        title: Text(title, style: const TextStyle(color: Colors.white)),
+        content: Text(message, style: const TextStyle(color: Colors.white)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('OK', style: TextStyle(color: Colors.green)),
+            child: const Text('OK', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

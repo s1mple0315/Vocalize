@@ -66,7 +66,9 @@ class _RecordingsPageState extends State<RecordingsPage> {
         content: TextField(
           style: TextStyle(color: Colors.white),
           controller: controller,
-          decoration: const InputDecoration(hintText: 'Enter new name'),
+          decoration: const InputDecoration(
+              hintText: 'Enter new name',
+              hintStyle: TextStyle(color: Colors.white)),
         ),
         actions: [
           TextButton(
@@ -78,19 +80,23 @@ class _RecordingsPageState extends State<RecordingsPage> {
                   _fetchRecordings(); // Refresh the list
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Recording renamed')),
+                    const SnackBar(
+                        content: Text('Recording renamed',
+                            style: TextStyle(color: Colors.white))),
                   );
                 }
               } catch (e) {
                 _showErrorDialog('Error renaming recording', e.toString());
               }
             },
-            child: const Text('Rename'),
+            child: const Text('Rename', style: TextStyle(color: Colors.white)),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
+              onPressed: () => Navigator.pop(context),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.white),
+              )),
         ],
       ),
     );
@@ -100,13 +106,13 @@ class _RecordingsPageState extends State<RecordingsPage> {
     showDialog(
       context: this.context,
       builder: (context) => AlertDialog(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.grey[800],
         title: Text(title),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
+            child: const Text('OK', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -207,21 +213,27 @@ class _RecordingsPageState extends State<RecordingsPage> {
                               const SnackBar(
                                   content: Text(
                                 'Transcription saved',
+                                style: TextStyle(color: Colors.white),
                               )),
                             );
                           } else {
-                            ScaffoldMessenger.of(parentContext).showSnackBar(
-                              const SnackBar(
-                                  content: Text(
-                                      'Please enter a name for the transcription')),
-                            );
+                            ScaffoldMessenger.of(parentContext)
+                                .showSnackBar(const SnackBar(
+                              content: Text(
+                                  'Please enter a name for the transcription',
+                                  style: TextStyle(color: Colors.white)),
+                            ));
                           }
                         },
-                        child: const Text('Save'),
+                        child: const Text('Save',
+                            style: TextStyle(color: Colors.white)),
                       ),
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: const Text('Cancel'),
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ],
                   ),
@@ -235,29 +247,6 @@ class _RecordingsPageState extends State<RecordingsPage> {
       ),
     );
   }
-
-  // void _showTranscriptionDialog(String transcription) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       backgroundColor: Colors.black,
-  //       title:
-  //           const Text('Transcription', style: TextStyle(color: Colors.white)),
-  //       content: SingleChildScrollView(
-  //         child: Text(
-  //           transcription,
-  //           style: const TextStyle(color: Colors.white),
-  //         ),
-  //       ),
-  //       actions: [
-  //         TextButton(
-  //           onPressed: () => Navigator.pop(context),
-  //           child: const Text('OK'),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
