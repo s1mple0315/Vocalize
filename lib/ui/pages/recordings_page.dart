@@ -106,9 +106,15 @@ class _RecordingsPageState extends State<RecordingsPage> {
     showDialog(
       context: this.context,
       builder: (context) => AlertDialog(
-        backgroundColor: Colors.grey[800],
-        title: Text(title),
-        content: Text(message),
+        backgroundColor: Colors.grey[900],
+        title: Text(
+          title,
+          style: TextStyle(color: Colors.white),
+        ),
+        content: Text(
+          message,
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -180,22 +186,31 @@ class _RecordingsPageState extends State<RecordingsPage> {
             onTap: () async {
               Navigator.pop(context);
               try {
-                String transcriptionText =
+                // Get the transcription response
+                final transcriptionResponse =
                     await _apiService.transcribeFile(recording);
+
+                // Extract the transcription text correctly
+                final transcriptionText =
+                    transcriptionResponse['transcription'] as String;
+
                 final TextEditingController controller =
                     TextEditingController();
                 showDialog(
-                  context: parentContext, // Use the parent context here
+                  context: parentContext,
                   builder: (context) => AlertDialog(
                     backgroundColor: Colors.grey[800],
-                    title: const Text('Name the Transcription',
-                        style: TextStyle(color: Colors.white)),
+                    title: const Text(
+                      'Name the Transcription',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     content: TextField(
                       style: const TextStyle(color: Colors.white),
                       controller: controller,
                       decoration: const InputDecoration(
-                          hintText: 'Enter transcription name',
-                          hintStyle: TextStyle(color: Colors.white)),
+                        hintText: 'Enter transcription name',
+                        hintStyle: TextStyle(color: Colors.white),
+                      ),
                     ),
                     actions: [
                       TextButton(
@@ -206,22 +221,27 @@ class _RecordingsPageState extends State<RecordingsPage> {
                                 Provider.of<TranscriptionProvider>(
                                     parentContext,
                                     listen: false);
+
+                            // Ensure the correct type is passed
                             transcriptionProvider.addTranscription(
                                 name, transcriptionText);
+
                             Navigator.pop(context);
                             ScaffoldMessenger.of(parentContext).showSnackBar(
                               const SnackBar(
-                                  content: Text(
-                                'Transcription saved',
-                                style: TextStyle(color: Colors.white),
-                              )),
+                                content: Text(
+                                  'Transcription saved',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
                             );
                           } else {
                             ScaffoldMessenger.of(parentContext)
                                 .showSnackBar(const SnackBar(
                               content: Text(
-                                  'Please enter a name for the transcription',
-                                  style: TextStyle(color: Colors.white)),
+                                'Please enter a name for the transcription',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ));
                           }
                         },

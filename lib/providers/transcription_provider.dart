@@ -22,14 +22,13 @@ class TranscriptionProvider with ChangeNotifier {
   }
 
   // Add a new transcription
-  Future<void> addTranscription(String name, String text) async {
+ void addTranscription(String name, String text) {
     final newTranscription = Transcription(
-      id: _uuid.v4(), // Generate a unique ID for each transcription
+      id: DateTime.now().toIso8601String(), // Generate a unique ID
       name: name,
       text: text,
     );
     _transcriptions.add(newTranscription);
-    await _saveTranscriptions();
     notifyListeners();
   }
 
@@ -41,15 +40,14 @@ class TranscriptionProvider with ChangeNotifier {
   }
 
   // Update an existing transcription
-  Future<void> updateTranscription(String id, String newText) async {
+  void updateTranscription(String id, String updatedText) {
     final index = _transcriptions.indexWhere((t) => t.id == id);
     if (index != -1) {
       _transcriptions[index] = Transcription(
         id: _transcriptions[index].id,
         name: _transcriptions[index].name,
-        text: newText,
+        text: updatedText,
       );
-      await _saveTranscriptions();
       notifyListeners();
     }
   }
