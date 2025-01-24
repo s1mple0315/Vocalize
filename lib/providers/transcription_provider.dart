@@ -2,10 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vocalize/models/transcription_model.dart';
-import 'package:uuid/uuid.dart';
 
 class TranscriptionProvider with ChangeNotifier {
-  final Uuid _uuid = Uuid(); // For generating unique IDs
   List<Transcription> _transcriptions = [];
 
   List<Transcription> get transcriptions => _transcriptions;
